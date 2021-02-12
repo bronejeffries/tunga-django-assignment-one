@@ -66,19 +66,24 @@ def search_entry(request):
             search entry logs
     """
     context = {}
-    template_to_load = 'visitors/search_entry.html'
+    template_to_load = 'vistors/search_entry.html'
     if request.method == "POST":
         data = request.POST
         search_data = {}
         # filter relavant search parameters
         if data['name']:
-            search_data['vistor__name'] = data['name']
+            search_data['vistor__name__contains'] = data['name']
+
+        if data['phone']:
+            search_data['vistor__tel_number__contains'] = data['phone']
 
         if data['temperature']:
             search_data['temperature__gte'] = data['temperature']
 
-        # if data['from_date']:
-        # 	search_data['time_stamp__gte'] = data[]
+        if data['from_date']:
+            print(data['from_date'])
+            search_data['time_stamp__date__gte'] = data['from_date']
+
         query_result = Entry.objects.filter(**search_data)
         context['result'] = query_result
     return render(request, template_to_load, context)

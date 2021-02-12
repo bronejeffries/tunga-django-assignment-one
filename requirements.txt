@@ -1,0 +1,5 @@
+asgiref
+Django
+pkg-resources
+pytz
+sqlparse

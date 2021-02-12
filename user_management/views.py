@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from messages import messages
 from django.db import IntegrityError
 from vistors.models import Entry
-
+from datetime import date
 # Create your views here.
 
 
@@ -15,7 +15,7 @@ def home(request):
     """
     context = {}
     template_to_load = 'user_management/views/home/index.html'
-    context['entries'] = Entry.objects.all()
+    context['entries'] = Entry.objects.filter(time_stamp__date=date.today())
     return render(request, template_to_load, context)
 
 
